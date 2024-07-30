@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\landlord\Tenant;
 use Illuminate\Database\Seeder;
+
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +14,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        if (! Tenant::checkCurrent()) { // Landlord
+            $this->runLandlordSeeders();
+        } else { // Tenants
+            $this->runTenantSeeders();
+        }
+    }
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+    public function runLandlordSeeders(): void
+    {
+        $this->call([
+            \Database\Seeders\landlord\PermissionsRolesUsersSeeder::class,
+            \Database\Seeders\landlord\TenantSeeder::class,
+        ]);
+    }
+
+    public function runTenantSeeders(): void
+    {
+        $this->call([
+            \Database\Seeders\tenants\PermissionsRolesUsersSeeder::class,
         ]);
     }
 }

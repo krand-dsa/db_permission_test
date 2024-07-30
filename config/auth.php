@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'web'),
+        'guard' => env('AUTH_GUARD', 'tenants'), // was: web
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
     ],
 
@@ -36,6 +36,14 @@ return [
     */
 
     'guards' => [
+        'tenants' => [
+            'driver' => 'session',
+            'provider' => 'tenants',
+        ],
+        'landlord' => [
+            'driver' => 'session',
+            'provider' => 'landlord',
+        ],
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
@@ -62,7 +70,15 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model' => env('AUTH_MODEL', App\Models\landlord\User::class),
+        ],
+        'landlord' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\landlord\User::class,
+        ],
+        'tenants' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\tenants\User::class,
         ],
 
         // 'users' => [

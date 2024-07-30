@@ -31,17 +31,26 @@ return [
 
     'connections' => [
 
+        'tenant' => [
+            'driver' => 'sqlite',
+            'database' => null,
+            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
+        ],
+        'landlord' => [
+            'driver' => 'sqlite',
+            'database' => env('DB_DATABASE', '/var/www/html/database/database.sqlite'),
+            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
+        ],
+
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DB_URL'),
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
-            'busy_timeout' => null,
-            'journal_mode' => null,
-            'synchronous' => null,
         ],
 
+        /*
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DB_URL'),
@@ -110,7 +119,7 @@ return [
             'prefix_indexes' => true,
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
-        ],
+        ], */
 
     ],
 
